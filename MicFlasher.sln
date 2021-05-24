@@ -5,7 +5,9 @@ VisualStudioVersion = 16.0.30907.101
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Voicemeeter", "Voicemeeter\Voicemeeter.csproj", "{3FF4B51D-4F3C-4E98-B3F5-F45464DB4C42}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MicFlasher.UI", "MicFlasher.UI\MicFlasher.UI.csproj", "{B3BF9649-C72B-425A-AB2C-26C2006F3F8D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MicFlasher.UI", "MicFlasher.UI\MicFlasher.UI.csproj", "{B3BF9649-C72B-425A-AB2C-26C2006F3F8D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Elgato", "Elgato\Elgato.csproj", "{81A78847-7A10-49F9-9DC8-39E1C0A7122A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{B3BF9649-C72B-425A-AB2C-26C2006F3F8D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B3BF9649-C72B-425A-AB2C-26C2006F3F8D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B3BF9649-C72B-425A-AB2C-26C2006F3F8D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{81A78847-7A10-49F9-9DC8-39E1C0A7122A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{81A78847-7A10-49F9-9DC8-39E1C0A7122A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{81A78847-7A10-49F9-9DC8-39E1C0A7122A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{81A78847-7A10-49F9-9DC8-39E1C0A7122A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
