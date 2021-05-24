@@ -31,28 +31,31 @@ namespace MicFlasher.UI
         {
             this.components = new System.ComponentModel.Container();
             this.timerHeartbeat = new System.Windows.Forms.Timer(this.components);
-            this.lblMuteStatus = new System.Windows.Forms.Label();
+            this.VoiceMeeterLabel = new System.Windows.Forms.Label();
             this.timerFlashPulse = new System.Windows.Forms.Timer(this.components);
-            this.pnlVoiceMeeter = new System.Windows.Forms.Panel();
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.label1 = new System.Windows.Forms.Label();
-            this.pnlVoiceMeeter.SuspendLayout();
-            this.panel1.SuspendLayout();
+            this.VoiceMeeterPanel = new System.Windows.Forms.Panel();
+            this.MicPanel = new System.Windows.Forms.Panel();
+            this.MicLabel = new System.Windows.Forms.Label();
+            this.LightLabel = new System.Windows.Forms.Label();
+            this.LightPanel = new System.Windows.Forms.Panel();
+            this.VoiceMeeterPanel.SuspendLayout();
+            this.MicPanel.SuspendLayout();
+            this.LightPanel.SuspendLayout();
             this.SuspendLayout();
             // 
-            // lblMuteStatus
+            // VoiceMeeterLabel
             // 
-            this.lblMuteStatus.AutoSize = true;
-            this.lblMuteStatus.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.lblMuteStatus.ForeColor = System.Drawing.Color.White;
-            this.lblMuteStatus.Location = new System.Drawing.Point(37, 44);
-            this.lblMuteStatus.Margin = new System.Windows.Forms.Padding(8, 0, 8, 0);
-            this.lblMuteStatus.Name = "lblMuteStatus";
-            this.lblMuteStatus.Size = new System.Drawing.Size(69, 45);
-            this.lblMuteStatus.TabIndex = 3;
-            this.lblMuteStatus.Text = "VM";
-            this.lblMuteStatus.TextAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.lblMuteStatus.Click += new System.EventHandler(this.lblMuteStatus_Click);
+            this.VoiceMeeterLabel.AutoSize = true;
+            this.VoiceMeeterLabel.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.VoiceMeeterLabel.ForeColor = System.Drawing.Color.White;
+            this.VoiceMeeterLabel.Location = new System.Drawing.Point(37, 44);
+            this.VoiceMeeterLabel.Margin = new System.Windows.Forms.Padding(8, 0, 8, 0);
+            this.VoiceMeeterLabel.Name = "VoiceMeeterLabel";
+            this.VoiceMeeterLabel.Size = new System.Drawing.Size(69, 45);
+            this.VoiceMeeterLabel.TabIndex = 3;
+            this.VoiceMeeterLabel.Text = "VM";
+            this.VoiceMeeterLabel.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.VoiceMeeterLabel.Click += new System.EventHandler(this.lblMuteStatus_Click);
             // 
             // timerFlashPulse
             // 
@@ -60,44 +63,67 @@ namespace MicFlasher.UI
             this.timerFlashPulse.Interval = 1000;
             this.timerFlashPulse.Tick += new System.EventHandler(this.timerFlashPulse_Tick);
             // 
-            // pnlVoiceMeeter
+            // VoiceMeeterPanel
             // 
-            this.pnlVoiceMeeter.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
-            this.pnlVoiceMeeter.Controls.Add(this.lblMuteStatus);
-            this.pnlVoiceMeeter.Location = new System.Drawing.Point(0, 0);
-            this.pnlVoiceMeeter.Name = "pnlVoiceMeeter";
-            this.pnlVoiceMeeter.Size = new System.Drawing.Size(140, 140);
-            this.pnlVoiceMeeter.TabIndex = 4;
+            this.VoiceMeeterPanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
+            this.VoiceMeeterPanel.Controls.Add(this.VoiceMeeterLabel);
+            this.VoiceMeeterPanel.Location = new System.Drawing.Point(0, 0);
+            this.VoiceMeeterPanel.Name = "VoiceMeeterPanel";
+            this.VoiceMeeterPanel.Size = new System.Drawing.Size(140, 140);
+            this.VoiceMeeterPanel.TabIndex = 4;
             // 
-            // panel1
+            // MicPanel
             // 
-            this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
-            this.panel1.Controls.Add(this.label1);
-            this.panel1.Location = new System.Drawing.Point(142, 0);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(140, 140);
-            this.panel1.TabIndex = 5;
+            this.MicPanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
+            this.MicPanel.Controls.Add(this.MicLabel);
+            this.MicPanel.Location = new System.Drawing.Point(142, 0);
+            this.MicPanel.Name = "MicPanel";
+            this.MicPanel.Size = new System.Drawing.Size(140, 140);
+            this.MicPanel.TabIndex = 5;
             // 
-            // label1
+            // MicLabel
             // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label1.ForeColor = System.Drawing.Color.White;
-            this.label1.Location = new System.Drawing.Point(36, 44);
-            this.label1.Margin = new System.Windows.Forms.Padding(8, 0, 8, 0);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(72, 45);
-            this.label1.TabIndex = 3;
-            this.label1.Text = "Mic";
-            this.label1.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.MicLabel.AutoSize = true;
+            this.MicLabel.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.MicLabel.ForeColor = System.Drawing.Color.White;
+            this.MicLabel.Location = new System.Drawing.Point(36, 44);
+            this.MicLabel.Margin = new System.Windows.Forms.Padding(8, 0, 8, 0);
+            this.MicLabel.Name = "MicLabel";
+            this.MicLabel.Size = new System.Drawing.Size(72, 45);
+            this.MicLabel.TabIndex = 3;
+            this.MicLabel.Text = "Mic";
+            this.MicLabel.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            // 
+            // LightLabel
+            // 
+            this.LightLabel.AutoSize = true;
+            this.LightLabel.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.LightLabel.ForeColor = System.Drawing.Color.White;
+            this.LightLabel.Location = new System.Drawing.Point(26, 44);
+            this.LightLabel.Margin = new System.Windows.Forms.Padding(8, 0, 8, 0);
+            this.LightLabel.Name = "LightLabel";
+            this.LightLabel.Size = new System.Drawing.Size(91, 45);
+            this.LightLabel.TabIndex = 3;
+            this.LightLabel.Text = "Light";
+            this.LightLabel.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            // 
+            // LightPanel
+            // 
+            this.LightPanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
+            this.LightPanel.Controls.Add(this.LightLabel);
+            this.LightPanel.Location = new System.Drawing.Point(284, 0);
+            this.LightPanel.Name = "LightPanel";
+            this.LightPanel.Size = new System.Drawing.Size(140, 140);
+            this.LightPanel.TabIndex = 6;
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(18F, 45F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(281, 140);
-            this.Controls.Add(this.panel1);
-            this.Controls.Add(this.pnlVoiceMeeter);
+            this.ClientSize = new System.Drawing.Size(424, 140);
+            this.Controls.Add(this.LightPanel);
+            this.Controls.Add(this.MicPanel);
+            this.Controls.Add(this.VoiceMeeterPanel);
             this.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.MaximizeBox = false;
@@ -107,21 +133,25 @@ namespace MicFlasher.UI
             this.TopMost = true;
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.MainForm_FormClosed);
             this.Load += new System.EventHandler(this.MainForm_Load);
-            this.pnlVoiceMeeter.ResumeLayout(false);
-            this.pnlVoiceMeeter.PerformLayout();
-            this.panel1.ResumeLayout(false);
-            this.panel1.PerformLayout();
+            this.VoiceMeeterPanel.ResumeLayout(false);
+            this.VoiceMeeterPanel.PerformLayout();
+            this.MicPanel.ResumeLayout(false);
+            this.MicPanel.PerformLayout();
+            this.LightPanel.ResumeLayout(false);
+            this.LightPanel.PerformLayout();
             this.ResumeLayout(false);
 
         }
 
         #endregion
         private System.Windows.Forms.Timer timerHeartbeat;
-        private System.Windows.Forms.Label lblMuteStatus;
+        private System.Windows.Forms.Label VoiceMeeterLabel;
         private System.Windows.Forms.Timer timerFlashPulse;
-        private System.Windows.Forms.Panel pnlVoiceMeeter;
-        private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Panel VoiceMeeterPanel;
+        private System.Windows.Forms.Panel MicPanel;
+        private System.Windows.Forms.Label MicLabel;
+        private System.Windows.Forms.Label LightLabel;
+        private System.Windows.Forms.Panel LightPanel;
     }
 }
 
