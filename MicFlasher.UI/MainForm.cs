@@ -13,8 +13,10 @@ namespace MicFlasher.UI
 {
     public partial class MainForm : Form
     {
-        private static bool pulseOn = true;
-        private static readonly LightApi lightApi = new LightApi("192.168.178.83", 9123);
+        private static bool _pulseOn = true;
+        private static readonly string LightStripUri = Properties.Settings.Default.LightStripUri;
+        public static readonly int LightStripPort = Properties.Settings.Default.LightStripPort;
+        private static readonly LightApi LightApi = new LightApi(LightStripUri, LightStripPort);
 
         public MainForm()
         {
@@ -26,7 +28,6 @@ namespace MicFlasher.UI
             Remote.Login(RunVoicemeeterParam.VoicemeeterBanana, false);
         }
 
-
         private void MainForm_FormClosed(object sender, FormClosedEventArgs e)
         {
             Remote.Logout();
@@ -34,13 +35,23 @@ namespace MicFlasher.UI
 
         private void timerFlashPulse_Tick(object sender, EventArgs e)
         {
-            Debug.WriteLine(pulseOn
-                ? lightApi.SendLightStatusColor(true, 0, 100, 100)
-                : lightApi.SendLightStatusOnOff(false));
-            pulseOn = !pulseOn;
+            Debug.WriteLine(_pulseOn
+                ? LightApi.SendLightStatusColor(true, 0, 100, 100)
+                : LightApi.SendLightStatusOnOff(false));
+            _pulseOn = !_pulseOn;
         }
 
         private void lblMuteStatus_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void MicPanel_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void MicLabel_Click(object sender, EventArgs e)
         {
 
         }
