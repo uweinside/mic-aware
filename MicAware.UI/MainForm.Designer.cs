@@ -170,7 +170,6 @@ namespace MicAware.UI
             this.NotifyIconMain.ContextMenuStrip = this.MenuStripTrayIcon;
             this.NotifyIconMain.Icon = ((System.Drawing.Icon)(resources.GetObject("NotifyIconMain.Icon")));
             this.NotifyIconMain.Text = "NotifyIconMain";
-            this.NotifyIconMain.Visible = true;
             this.NotifyIconMain.DoubleClick += new System.EventHandler(this.NotifyIconMain_DoubleClick);
             // 
             // MenuStripTrayIcon

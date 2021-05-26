@@ -169,9 +169,7 @@ namespace MicAware.UI
             if (statusJson == null)
                 _lightStripStatus = StatusInfo.LightStripStatus.Error;
             else
-            {
                 _lightStripStatus = StatusInfo.LightStripStatus.OK;
-            }
             DisplayLightStripStatus();
         }
 
@@ -265,7 +263,7 @@ namespace MicAware.UI
 
         private void MenuItemExit_Click(object sender, EventArgs e)
         {
-            this.Close();
+            Close();
         }
     }
 }
