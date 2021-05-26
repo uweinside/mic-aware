@@ -1,5 +1,5 @@
 ﻿
-namespace MicFlasher.UI
+namespace MicAware.UI
 {
     partial class MainForm
     {
@@ -176,7 +176,7 @@ namespace MicFlasher.UI
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.Text = "MicAware";
             this.TopMost = true;
-            this.Load += new System.EventHandler(this.MainForm_Load);
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.MainForm_FormClosed);
             this.VoiceMeeterPanel.ResumeLayout(false);
             this.MicrophonePanel.ResumeLayout(false);
             this.LightStripPanel.ResumeLayout(false);

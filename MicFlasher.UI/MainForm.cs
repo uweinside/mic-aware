@@ -3,10 +3,10 @@ using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Forms;
 using Elgato;
-using MicFlasher.UI.Properties;
+using MicAware.UI.Properties;
 using VoiceMeeter;
 
-namespace MicFlasher.UI
+namespace MicAware.UI
 {
     public partial class MainForm : Form
     {
@@ -31,9 +31,9 @@ namespace MicFlasher.UI
         private void timerFlashPulse_Tick(object sender, EventArgs e)
         {
             if (_pulseOn)
-                SendRed();
+                SendLightsRed();
             else
-                SendOff();
+                SendLightsOff();
 
             _pulseOn = !_pulseOn;
         }
@@ -77,7 +77,7 @@ namespace MicFlasher.UI
                     MicrophonePanel.BackColor = Color.Green;
                     MicrophoneLabel.ForeColor = Color.White;
                     MicrophoneStatusLabel.ForeColor = Color.White;
-                    SendGreen();
+                    SendLightsGreen();
                     MicrophoneStatusLabel.Text = "ON";
                     break;
                 case StatusInfo.MicrophoneStatus.Off:
@@ -97,14 +97,14 @@ namespace MicFlasher.UI
                     MicrophoneLabel.ForeColor = Color.Black;
                     MicrophoneStatusLabel.ForeColor = Color.Black;
                     MicrophoneStatusLabel.Text = "Wait";
-                    SendBlue();
+                    SendLightsBlue();
                     break;
                 default:
                     MicrophonePanel.BackColor = Color.DodgerBlue;
                     MicrophoneLabel.ForeColor = Color.Black;
                     MicrophoneStatusLabel.ForeColor = Color.Black;
                     MicrophoneStatusLabel.Text = "Wait";
-                    SendBlue();
+                    SendLightsBlue();
                     break;
             }
         }
@@ -134,31 +134,31 @@ namespace MicFlasher.UI
             }
         }
 
-        private void SendRed()
+        private void SendLightsRed()
         {
             var res = LightApi.SendLightStatusColor(true, 0, 100, 100);
             SetLightStripStatus(res);
         }
 
-        private void SendBlue()
+        private void SendLightsBlue()
         {
             var res = LightApi.SendLightStatusColor(true, 240, 100, 100);
             SetLightStripStatus(res);
         }
 
-        private void SendGreen()
+        private void SendLightsGreen()
         {
             var res = LightApi.SendLightStatusColor(true, 107, 100, 100);
             SetLightStripStatus(res);
         }
 
-        private void SendOff()
+        private void SendLightsOff()
         {
             var res = LightApi.SendLightStatusOnOff(false);
             SetLightStripStatus(res);
         }
 
-        private void SendOn()
+        private void SendLightsOn()
         {
             var res = LightApi.SendLightStatusOnOff(true);
             SetLightStripStatus(res);
@@ -173,12 +173,6 @@ namespace MicFlasher.UI
                 _lightStripStatus = StatusInfo.LightStripStatus.OK;
             }
             DisplayLightStripStatus();
-        }
-
-
-
-        private void MainForm_Load(object sender, EventArgs e)
-        {
         }
 
         private void TimerHeartbeat_Tick(object sender, EventArgs e)
@@ -226,11 +220,16 @@ namespace MicFlasher.UI
         private void TimerBlink_Tick(object sender, EventArgs e)
         {
             if (_pulseOn)
-                SendRed();
+                SendLightsRed();
             else
-                SendOff();
+                SendLightsOff();
             
             _pulseOn = !_pulseOn;
+        }
+
+        private void MainForm_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            SendLightsOff();
         }
     }
 }
