@@ -174,7 +174,7 @@ namespace MicAware.UI
             this.MaximizeBox = false;
             this.Name = "MainForm";
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
-            this.Text = "MicAware";
+            this.Text = "MicAware 1.0";
             this.TopMost = true;
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.MainForm_FormClosed);
             this.VoiceMeeterPanel.ResumeLayout(false);
