@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Voicemeeter;
 
-namespace MicAware.UI
+namespace MicAware
 {
     static class Program
     {

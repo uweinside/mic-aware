@@ -1,5 +1,5 @@
 ﻿
-namespace MicAware.UI
+namespace MicAware
 {
     partial class MainForm
     {

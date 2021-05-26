@@ -14,7 +14,7 @@
 1.0.2 Added IObservable over IsParameterDirty().  Parameters class.
 1.0.1 Expose IsParameterDirty()
 1.0.0 Initial Release</PackageReleaseNotes>
-    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
     <Version>1.0.3</Version>
   </PropertyGroup>
 

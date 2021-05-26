@@ -3,15 +3,14 @@ using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Forms;
 using Elgato;
-using MicAware.UI.Properties;
+using MicAware.Properties;
 using VoiceMeeter;
 
-namespace MicAware.UI
+namespace MicAware
 {
     public partial class MainForm : Form
     {
         private static bool _pulseOn = true;
-        private static int _retryCount = 0;
         private static readonly string LightStripUri = Settings.Default.LightStripUri;
         public static readonly int LightStripPort = Settings.Default.LightStripPort;
         private static readonly LightApi LightApi = new(LightStripUri, LightStripPort);

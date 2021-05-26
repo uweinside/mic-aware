@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.30907.101
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Voicemeeter", "Voicemeeter\Voicemeeter.csproj", "{3FF4B51D-4F3C-4E98-B3F5-F45464DB4C42}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MicAware.UI", "MicAware.UI\MicAware.UI.csproj", "{B3BF9649-C72B-425A-AB2C-26C2006F3F8D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MicAware", "MicAware\MicAware.csproj", "{B3BF9649-C72B-425A-AB2C-26C2006F3F8D}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Elgato", "Elgato\Elgato.csproj", "{81A78847-7A10-49F9-9DC8-39E1C0A7122A}"
 EndProject
