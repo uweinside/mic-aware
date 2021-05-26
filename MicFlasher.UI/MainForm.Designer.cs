@@ -177,6 +177,7 @@ namespace MicAware.UI
             this.Text = "MicAware 1.0";
             this.TopMost = true;
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.MainForm_FormClosed);
+            this.Load += new System.EventHandler(this.MainForm_Load);
             this.VoiceMeeterPanel.ResumeLayout(false);
             this.MicrophonePanel.ResumeLayout(false);
             this.LightStripPanel.ResumeLayout(false);

@@ -231,5 +231,10 @@ namespace MicAware.UI
         {
             SendLightsOff();
         }
+
+        private void MainForm_Load(object sender, EventArgs e)
+        {
+            // no comment
+        }
     }
 }
