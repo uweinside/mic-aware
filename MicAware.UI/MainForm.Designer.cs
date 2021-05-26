@@ -42,22 +42,27 @@ namespace MicAware.UI
             this.LightStripStatusLabel = new System.Windows.Forms.Label();
             this.TimerHeartbeat = new System.Windows.Forms.Timer(this.components);
             this.TimerBlink = new System.Windows.Forms.Timer(this.components);
+            this.NotifyIconMain = new System.Windows.Forms.NotifyIcon(this.components);
+            this.MenuStripTrayIcon = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.MenuItemExit = new System.Windows.Forms.ToolStripMenuItem();
+            this.TimerMinimize = new System.Windows.Forms.Timer(this.components);
             this.VoiceMeeterPanel.SuspendLayout();
             this.MicrophonePanel.SuspendLayout();
             this.LightStripPanel.SuspendLayout();
+            this.MenuStripTrayIcon.SuspendLayout();
             this.SuspendLayout();
             // 
             // VoiceMeeterLabel
             // 
-            this.VoiceMeeterLabel.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.VoiceMeeterLabel.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.VoiceMeeterLabel.ForeColor = System.Drawing.Color.White;
-            this.VoiceMeeterLabel.Location = new System.Drawing.Point(4, 16);
+            this.VoiceMeeterLabel.Location = new System.Drawing.Point(4, 15);
             this.VoiceMeeterLabel.Margin = new System.Windows.Forms.Padding(8, 0, 8, 0);
             this.VoiceMeeterLabel.Name = "VoiceMeeterLabel";
             this.VoiceMeeterLabel.Size = new System.Drawing.Size(92, 20);
             this.VoiceMeeterLabel.TabIndex = 3;
             this.VoiceMeeterLabel.Text = "VoiceMeeter";
-            this.VoiceMeeterLabel.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.VoiceMeeterLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // VoiceMeeterPanel
             // 
@@ -71,9 +76,9 @@ namespace MicAware.UI
             // 
             // VoiceMeeterStatusLabel
             // 
-            this.VoiceMeeterStatusLabel.Font = new System.Drawing.Font("Segoe UI", 22F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.VoiceMeeterStatusLabel.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.VoiceMeeterStatusLabel.ForeColor = System.Drawing.Color.White;
-            this.VoiceMeeterStatusLabel.Location = new System.Drawing.Point(4, 38);
+            this.VoiceMeeterStatusLabel.Location = new System.Drawing.Point(4, 35);
             this.VoiceMeeterStatusLabel.Margin = new System.Windows.Forms.Padding(8, 0, 8, 0);
             this.VoiceMeeterStatusLabel.Name = "VoiceMeeterStatusLabel";
             this.VoiceMeeterStatusLabel.Size = new System.Drawing.Size(96, 41);
@@ -93,22 +98,22 @@ namespace MicAware.UI
             // 
             // MicrophoneLabel
             // 
-            this.MicrophoneLabel.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.MicrophoneLabel.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.MicrophoneLabel.ForeColor = System.Drawing.Color.White;
             this.MicrophoneLabel.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.MicrophoneLabel.Location = new System.Drawing.Point(5, 16);
+            this.MicrophoneLabel.Location = new System.Drawing.Point(5, 15);
             this.MicrophoneLabel.Margin = new System.Windows.Forms.Padding(8, 0, 8, 0);
             this.MicrophoneLabel.Name = "MicrophoneLabel";
             this.MicrophoneLabel.Size = new System.Drawing.Size(89, 20);
             this.MicrophoneLabel.TabIndex = 4;
             this.MicrophoneLabel.Text = "Microphone";
-            this.MicrophoneLabel.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.MicrophoneLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // MicrophoneStatusLabel
             // 
-            this.MicrophoneStatusLabel.Font = new System.Drawing.Font("Segoe UI", 22F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.MicrophoneStatusLabel.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.MicrophoneStatusLabel.ForeColor = System.Drawing.Color.White;
-            this.MicrophoneStatusLabel.Location = new System.Drawing.Point(0, 38);
+            this.MicrophoneStatusLabel.Location = new System.Drawing.Point(0, 35);
             this.MicrophoneStatusLabel.Margin = new System.Windows.Forms.Padding(8, 0, 8, 0);
             this.MicrophoneStatusLabel.Name = "MicrophoneStatusLabel";
             this.MicrophoneStatusLabel.Size = new System.Drawing.Size(100, 41);
@@ -128,9 +133,9 @@ namespace MicAware.UI
             // 
             // LightStripLabel
             // 
-            this.LightStripLabel.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.LightStripLabel.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.LightStripLabel.ForeColor = System.Drawing.Color.White;
-            this.LightStripLabel.Location = new System.Drawing.Point(0, 16);
+            this.LightStripLabel.Location = new System.Drawing.Point(0, 15);
             this.LightStripLabel.Margin = new System.Windows.Forms.Padding(8, 0, 8, 0);
             this.LightStripLabel.Name = "LightStripLabel";
             this.LightStripLabel.Size = new System.Drawing.Size(100, 20);
@@ -140,9 +145,9 @@ namespace MicAware.UI
             // 
             // LightStripStatusLabel
             // 
-            this.LightStripStatusLabel.Font = new System.Drawing.Font("Segoe UI", 22F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.LightStripStatusLabel.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.LightStripStatusLabel.ForeColor = System.Drawing.Color.White;
-            this.LightStripStatusLabel.Location = new System.Drawing.Point(0, 38);
+            this.LightStripStatusLabel.Location = new System.Drawing.Point(0, 35);
             this.LightStripStatusLabel.Margin = new System.Windows.Forms.Padding(8, 0, 8, 0);
             this.LightStripStatusLabel.Name = "LightStripStatusLabel";
             this.LightStripStatusLabel.Size = new System.Drawing.Size(100, 41);
@@ -159,6 +164,34 @@ namespace MicAware.UI
             // 
             this.TimerBlink.Interval = 1000;
             this.TimerBlink.Tick += new System.EventHandler(this.TimerBlink_Tick);
+            // 
+            // NotifyIconMain
+            // 
+            this.NotifyIconMain.ContextMenuStrip = this.MenuStripTrayIcon;
+            this.NotifyIconMain.Icon = ((System.Drawing.Icon)(resources.GetObject("NotifyIconMain.Icon")));
+            this.NotifyIconMain.Text = "NotifyIconMain";
+            this.NotifyIconMain.Visible = true;
+            this.NotifyIconMain.DoubleClick += new System.EventHandler(this.NotifyIconMain_DoubleClick);
+            // 
+            // MenuStripTrayIcon
+            // 
+            this.MenuStripTrayIcon.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.MenuItemExit});
+            this.MenuStripTrayIcon.Name = "MenuStripTrayIcon";
+            this.MenuStripTrayIcon.Size = new System.Drawing.Size(94, 26);
+            // 
+            // MenuItemExit
+            // 
+            this.MenuItemExit.Name = "MenuItemExit";
+            this.MenuItemExit.Size = new System.Drawing.Size(93, 22);
+            this.MenuItemExit.Text = "&Exit";
+            this.MenuItemExit.Click += new System.EventHandler(this.MenuItemExit_Click);
+            // 
+            // TimerMinimize
+            // 
+            this.TimerMinimize.Enabled = true;
+            this.TimerMinimize.Interval = 10000;
+            this.TimerMinimize.Tick += new System.EventHandler(this.TimerMinimize_Tick);
             // 
             // MainForm
             // 
@@ -178,9 +211,11 @@ namespace MicAware.UI
             this.TopMost = true;
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.MainForm_FormClosed);
             this.Load += new System.EventHandler(this.MainForm_Load);
+            this.Resize += new System.EventHandler(this.MainForm_Resize);
             this.VoiceMeeterPanel.ResumeLayout(false);
             this.MicrophonePanel.ResumeLayout(false);
             this.LightStripPanel.ResumeLayout(false);
+            this.MenuStripTrayIcon.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -197,5 +232,9 @@ namespace MicAware.UI
         private System.Windows.Forms.Label LightStripStatusLabel;
         private System.Windows.Forms.Timer TimerHeartbeat;
         private System.Windows.Forms.Timer TimerBlink;
+        private System.Windows.Forms.NotifyIcon NotifyIconMain;
+        private System.Windows.Forms.Timer TimerMinimize;
+        private System.Windows.Forms.ContextMenuStrip MenuStripTrayIcon;
+        private System.Windows.Forms.ToolStripMenuItem MenuItemExit;
     }
 }

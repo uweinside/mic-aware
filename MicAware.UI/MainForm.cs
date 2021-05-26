@@ -223,7 +223,7 @@ namespace MicAware.UI
                 SendLightsRed();
             else
                 SendLightsOff();
-            
+
             _pulseOn = !_pulseOn;
         }
 
@@ -234,7 +234,38 @@ namespace MicAware.UI
 
         private void MainForm_Load(object sender, EventArgs e)
         {
-            // no comment
+            NotifyIconMain.BalloonTipText = "Application is still running in the background.";
+            NotifyIconMain.BalloonTipTitle = "MicAware";
+        }
+
+
+        private void MainForm_Resize(object sender, EventArgs e)
+        {
+            if (WindowState == FormWindowState.Minimized)
+            {
+                ShowInTaskbar = false;
+                NotifyIconMain.Visible = true;
+                //NotifyIconMain.ShowBalloonTip(1000);
+            }
+        }
+
+        private void NotifyIconMain_DoubleClick(object sender, EventArgs e)
+        {
+            ShowInTaskbar = true;
+            NotifyIconMain.Visible = false;
+            WindowState = FormWindowState.Normal;
+        }
+
+        private void TimerMinimize_Tick(object sender, EventArgs e)
+        {
+            if (WindowState != FormWindowState.Minimized)
+                WindowState = FormWindowState.Minimized;
+            TimerMinimize.Enabled = false;
+        }
+
+        private void MenuItemExit_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
     }
 }
