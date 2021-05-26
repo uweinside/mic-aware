@@ -242,6 +242,8 @@ namespace MicAware
             {
                 ShowInTaskbar = false;
                 NotifyIconMain.Visible = true;
+                NotifyIconMain.BalloonTipTitle = "MicAware";
+                NotifyIconMain.BalloonTipText = "MicAware";
                 //NotifyIconMain.ShowBalloonTip(1000);
             }
         }

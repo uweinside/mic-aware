@@ -167,9 +167,11 @@ namespace MicAware
             // 
             // NotifyIconMain
             // 
+            this.NotifyIconMain.BalloonTipText = "MicAware";
+            this.NotifyIconMain.BalloonTipTitle = "MicAware";
             this.NotifyIconMain.ContextMenuStrip = this.MenuStripTrayIcon;
             this.NotifyIconMain.Icon = ((System.Drawing.Icon)(resources.GetObject("NotifyIconMain.Icon")));
-            this.NotifyIconMain.Text = "NotifyIconMain";
+            this.NotifyIconMain.Text = "MicAware";
             this.NotifyIconMain.DoubleClick += new System.EventHandler(this.NotifyIconMain_DoubleClick);
             // 
             // MenuStripTrayIcon
