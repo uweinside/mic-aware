@@ -1,9 +1,7 @@
-﻿using Microsoft.Win32;
-using System;
-using System.Runtime.InteropServices;
+﻿using System;
+using System.IO;
 using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
+using Microsoft.Win32;
 using Voicemeeter;
 
 namespace VoiceMeeter
@@ -13,10 +11,87 @@ namespace VoiceMeeter
         // Don't keep loading the DLL
         private static IntPtr? handle;
 
-        #region Parameters
-        
         /// <summary>
-        /// Gets a text value
+        ///     Logs into the Voicemeeter application.  Starts the given application (Voicemeeter, Bananna, Potato) if it is not
+        ///     already runnning.
+        /// </summary>
+        /// <param name="voicemeeterType">The Voicemeeter program to run</param>
+        /// <returns>IDisposable class to dispose when finished with the remote.</returns>
+        public static void Initialize(RunVoicemeeterParam voicemeeterType)
+        {
+            if (handle.HasValue == false)
+            {
+                // Find current version from the registry
+                const string key = @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall";
+                const string key32 =
+                    @"HKEY_LOCAL_MACHINE\SOFTWARE\WOW6432Node\Microsoft\Windows\CurrentVersion\Uninstall";
+                const string uninstKey = "VB:Voicemeeter {17359A74-1236-5467}";
+                var voicemeeter = Registry.GetValue($"{key}\\{uninstKey}", "UninstallString", null);
+
+                if (voicemeeter == null && Environment.Is64BitProcess)
+                    // Fall back to 32-bits registry
+                    voicemeeter = Registry.GetValue($"{key32}\\{uninstKey}", "UninstallString", null);
+
+                if (voicemeeter == null) throw new Exception("Voicemeeter not installed");
+
+                handle = Wrapper.LoadLibrary(
+                    Path.Combine(Path.GetDirectoryName(voicemeeter.ToString()),
+                        Environment.Is64BitProcess ? "VoicemeeterRemote64.dll" : "VoicemeeterRemote.dll"));
+            }
+
+            var startVoiceMeeter = voicemeeterType != RunVoicemeeterParam.None;
+        }
+
+        public static bool Login(RunVoicemeeterParam voicemeeterType, bool retry = true)
+        {
+            switch ((LoginResponse) RemoteWrapper.LoginVoicemeeter())
+            {
+                case LoginResponse.OK:
+                {
+                    return true;
+                }
+                case LoginResponse.AlreadyLoggedIn:
+                {
+                    return true;
+                }
+                case LoginResponse.VoicemeeterNotRunning:
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        public static bool Logout()
+        {
+            var logoutResponse = RemoteWrapper.Logout();
+
+            return logoutResponse == 0;
+        }
+
+        private static void TestResult(int result)
+        {
+            //0: OK(no error).
+            //-1: error
+            //-2: no server.
+            //-3: unknown parameter
+            //-5: structure mismatch
+            switch (result)
+            {
+                case 0: return;
+                case -1: throw new Exception("Parameter Error");
+                case -2: throw new Exception("Not Connected");
+                case -3: throw new ArgumentException("Parameter not found");
+                case -5: throw new Exception("Structure mismatch");
+                default: throw new Exception("Unknown");
+            }
+        }
+
+        #region Parameters
+
+        /// <summary>
+        ///     Gets a text value
         /// </summary>
         /// <param name="parameter"></param>
         /// <returns></returns>
@@ -31,7 +106,7 @@ namespace VoiceMeeter
         }
 
         /// <summary>
-        /// Set a text value
+        ///     Set a text value
         /// </summary>
         /// <param name="parameter"></param>
         /// <param name="value"></param>
@@ -42,7 +117,7 @@ namespace VoiceMeeter
         }
 
         /// <summary>
-        /// Get a named parameter
+        ///     Get a named parameter
         /// </summary>
         /// <param name="parameter">Parameter name</param>
         /// <returns>float value</returns>
@@ -54,7 +129,7 @@ namespace VoiceMeeter
         }
 
         /// <summary>
-        /// Set a named parameter
+        ///     Set a named parameter
         /// </summary>
         /// <param name="parameter">Parameter name</param>
         /// <param name="value">float value</param>
@@ -65,7 +140,7 @@ namespace VoiceMeeter
 
 
         /// <summary>
-        /// Set one or several parameters by a script
+        ///     Set one or several parameters by a script
         /// </summary>
         /// <param name="parameters">One or more instructions separated by comma, semicolon or newline</param>
         public static void SetParameters(string parameters)
@@ -78,12 +153,12 @@ namespace VoiceMeeter
         #region Commands
 
         /// <summary>
-        /// Start the VoiceMeeter program
+        ///     Start the VoiceMeeter program
         /// </summary>
         /// <param name="voicemeterType"></param>
         public static void Start(RunVoicemeeterParam voicemeterType)
         {
-            switch (RemoteWrapper.InternalRunVoicemeeter((int)voicemeterType))
+            switch (RemoteWrapper.InternalRunVoicemeeter((int) voicemeterType))
             {
                 case 0: return;
                 case -1: throw new Exception("Not installed");
@@ -92,7 +167,7 @@ namespace VoiceMeeter
         }
 
         /// <summary>
-        /// Shutdown the VoiceMeeter program
+        ///     Shutdown the VoiceMeeter program
         /// </summary>
         /// <param name="voicemeeterType">The Voicemeeter program to run</param>
         public static void Shutdown()
@@ -101,7 +176,7 @@ namespace VoiceMeeter
         }
 
         /// <summary>
-        /// Restart the audio engine
+        ///     Restart the audio engine
         /// </summary>
         public static void Restart()
         {
@@ -109,7 +184,7 @@ namespace VoiceMeeter
         }
 
         /// <summary>
-        /// Shows the running Voicemeeter application if minimized.
+        ///     Shows the running Voicemeeter application if minimized.
         /// </summary>
         public static void Show()
         {
@@ -117,7 +192,7 @@ namespace VoiceMeeter
         }
 
         /// <summary>
-        /// Return if the parameters have changed since the last time this method was called.
+        ///     Return if the parameters have changed since the last time this method was called.
         /// </summary>
         public static int IsParametersDirty()
         {
@@ -125,16 +200,17 @@ namespace VoiceMeeter
             {
                 return RemoteWrapper.IsParametersDirty();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 // TODO: Figure out the Memory Exception when calling the API
                 ;
             }
+
             return 0;
         }
 
         /// <summary>
-        /// Eject Cassette 
+        ///     Eject Cassette
         /// </summary>
         public static void Eject()
         {
@@ -142,7 +218,7 @@ namespace VoiceMeeter
         }
 
         /// <summary>
-        /// Load a configuation file name
+        ///     Load a configuation file name
         /// </summary>
         /// <param name="configurationFileName">Full path to file</param>
         public static void Load(string configurationFileName)
@@ -151,7 +227,7 @@ namespace VoiceMeeter
         }
 
         /// <summary>
-        /// Save a configuration to the given file name
+        ///     Save a configuration to the given file name
         /// </summary>
         /// <param name="configurationFileName">Full path to file</param>
         public static void Save(string configurationFileName)
@@ -166,7 +242,7 @@ namespace VoiceMeeter
         public static float GetLevel(LevelType type, int channel)
         {
             float value = 0;
-            TestLevelResult(RemoteWrapper.GetLevel((int)type, channel, ref value));
+            TestLevelResult(RemoteWrapper.GetLevel((int) type, channel, ref value));
             return value;
         }
 
@@ -189,89 +265,5 @@ namespace VoiceMeeter
         }
 
         #endregion
-
-        /// <summary>
-        /// Logs into the Voicemeeter application.  Starts the given application (Voicemeeter, Bananna, Potato) if it is not already runnning.
-        /// </summary>
-        /// <param name="voicemeeterType">The Voicemeeter program to run</param>
-        /// <returns>IDisposable class to dispose when finished with the remote.</returns>
-        public static void Initialize(RunVoicemeeterParam voicemeeterType)
-        {
-            if (handle.HasValue == false)
-            {
-                // Find current version from the registry
-                const string key = @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall";
-                const string key32 = @"HKEY_LOCAL_MACHINE\SOFTWARE\WOW6432Node\Microsoft\Windows\CurrentVersion\Uninstall";
-                const string uninstKey = "VB:Voicemeeter {17359A74-1236-5467}";
-                var voicemeeter = Registry.GetValue($"{key}\\{uninstKey}", "UninstallString", null);
-
-                if (voicemeeter == null && Environment.Is64BitProcess)
-                {
-                    // Fall back to 32-bits registry
-                    voicemeeter = Registry.GetValue($"{key32}\\{uninstKey}", "UninstallString", null);
-                }
-
-                if (voicemeeter == null)
-                {
-                    throw new Exception("Voicemeeter not installed");
-                }
-
-                handle = Wrapper.LoadLibrary(
-                    System.IO.Path.Combine(System.IO.Path.GetDirectoryName(voicemeeter.ToString()), 
-                        Environment.Is64BitProcess ? "VoicemeeterRemote64.dll" : "VoicemeeterRemote.dll"));
-            }
-
-            var startVoiceMeeter = voicemeeterType != RunVoicemeeterParam.None;
-
-            return;
-
-        }
-
-        public static bool Login(RunVoicemeeterParam voicemeeterType, bool retry = true)
-        {
-            switch ((LoginResponse)RemoteWrapper.LoginVoicemeeter())
-            {
-                case LoginResponse.OK:
-                case LoginResponse.AlreadyLoggedIn:
-                    return true;
-
-                case LoginResponse.VoicemeeterNotRunning:
-                    if (retry)
-                    {
-                        // Run voicemeeter program 
-                        Start(voicemeeterType);
-
-                        Thread.Sleep(2000);
-                        Login(voicemeeterType, false);
-                    }
-                    break;
-            }
-            return false;
-        }
-
-        public static bool Logout()
-        {
-            int logoutResponse = RemoteWrapper.Logout();
-
-            return (logoutResponse == 0);
-        }
-
-        private static void TestResult(int result)
-        {
-            //0: OK(no error).
-            //-1: error
-            //-2: no server.
-            //-3: unknown parameter
-            //-5: structure mismatch
-            switch (result)
-            {
-                case 0: return;
-                case -1: throw new Exception("Parameter Error");
-                case -2: throw new Exception("Not Connected");
-                case -3: throw new ArgumentException("Parameter not found");
-                case -5: throw new Exception("Structure mismatch");
-                default: throw new Exception("Unknown");
-            }
-        }
     }
 }

@@ -1,4 +1,6 @@
-﻿using System.IO;
+﻿using System;
+using System.Diagnostics;
+using System.IO;
 using System.Net.Http;
 using System.Text;
 
@@ -6,7 +8,6 @@ namespace Elgato
 {
     public class LightApi
     {
-
         // Red - Hue: 0, Saturation: 100, Brightness: 100
         // Green - Hue: 107, Saturation: 100, Brightness: 100
 
@@ -27,9 +28,17 @@ namespace Elgato
                 Content = new StringContent(requestJSON, Encoding.UTF8, "application/json")
             };
 
-            var response = _httpClient.Send(webRequest);
-            using var reader = new StreamReader(response.Content.ReadAsStream());
-            return reader.ReadToEnd();
+            try
+            {
+                var response = _httpClient.Send(webRequest);
+                using var reader = new StreamReader(response.Content.ReadAsStream());
+                return reader.ReadToEnd();
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"HTTP Send Exception: {ex.Message}");
+                return null;
+            }
         }
 
         public string SendLightStatusOnOff(bool lightOn)
