@@ -44,6 +44,7 @@ namespace MicAware
             this.TimerBlink = new System.Windows.Forms.Timer(this.components);
             this.NotifyIconGreen = new System.Windows.Forms.NotifyIcon(this.components);
             this.MenuStripTrayIcon = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.MenuItemShow = new System.Windows.Forms.ToolStripMenuItem();
             this.MenuItemExit = new System.Windows.Forms.ToolStripMenuItem();
             this.TimerMinimize = new System.Windows.Forms.Timer(this.components);
             this.NotifyIconRed = new System.Windows.Forms.NotifyIcon(this.components);
@@ -178,14 +179,22 @@ namespace MicAware
             // MenuStripTrayIcon
             // 
             this.MenuStripTrayIcon.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.MenuItemShow,
             this.MenuItemExit});
             this.MenuStripTrayIcon.Name = "MenuStripTrayIcon";
-            this.MenuStripTrayIcon.Size = new System.Drawing.Size(94, 26);
+            this.MenuStripTrayIcon.Size = new System.Drawing.Size(104, 48);
+            // 
+            // MenuItemShow
+            // 
+            this.MenuItemShow.Name = "MenuItemShow";
+            this.MenuItemShow.Size = new System.Drawing.Size(103, 22);
+            this.MenuItemShow.Text = "&Show";
+            this.MenuItemShow.Click += new System.EventHandler(this.MenuItemShow_Click);
             // 
             // MenuItemExit
             // 
             this.MenuItemExit.Name = "MenuItemExit";
-            this.MenuItemExit.Size = new System.Drawing.Size(93, 22);
+            this.MenuItemExit.Size = new System.Drawing.Size(103, 22);
             this.MenuItemExit.Text = "&Exit";
             this.MenuItemExit.Click += new System.EventHandler(this.MenuItemExit_Click);
             // 
@@ -247,5 +256,6 @@ namespace MicAware
         private System.Windows.Forms.ContextMenuStrip MenuStripTrayIcon;
         private System.Windows.Forms.ToolStripMenuItem MenuItemExit;
         private System.Windows.Forms.NotifyIcon NotifyIconRed;
+        private System.Windows.Forms.ToolStripMenuItem MenuItemShow;
     }
 }

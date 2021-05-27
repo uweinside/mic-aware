@@ -175,6 +175,16 @@ namespace MicAware
 
         private void NotifyIconMain_DoubleClick(object sender, EventArgs e)
         {
+            RestoreWindowFromMinimized();
+        }
+
+        private void MenuItemShow_Click(object sender, EventArgs e)
+        {
+            RestoreWindowFromMinimized();
+        }
+
+        private void RestoreWindowFromMinimized()
+        {
             ShowInTaskbar = true;
             NotifyIconGreen.Visible = false;
             WindowState = FormWindowState.Normal;
@@ -280,5 +290,6 @@ namespace MicAware
         }
 
         #endregion
+
     }
 }
