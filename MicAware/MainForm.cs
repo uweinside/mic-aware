@@ -248,7 +248,7 @@ namespace MicAware
                 microphoneStatus = SystemStatus.MicrophoneStatus.Unknown;
                 voiceMeeterStatus = SystemStatus.VoiceMeeterStatus.LoggedIn;
 
-                var res = Remote.GetParameter("Strip[0].Mute");
+                var res = Remote.GetParameter(Settings.Default.VoiceMeterParameter);
                 switch (res)
                 {
                     case 0:
