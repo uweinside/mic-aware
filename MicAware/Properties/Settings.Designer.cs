@@ -82,5 +82,17 @@ namespace MicAware.Properties {
                 this["VoiceMeterParameter"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("240,100,100")]
+        public string MicUndefinedColor {
+            get {
+                return ((string)(this["MicUndefinedColor"]));
+            }
+            set {
+                this["MicUndefinedColor"] = value;
+            }
+        }
     }
 }

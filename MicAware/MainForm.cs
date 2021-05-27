@@ -27,6 +27,10 @@ namespace MicAware
         private static readonly int lightStripPort = Settings.Default.LightStripPort;
         private static readonly LightApi lightApi = new(lightStripUri, lightStripPort);
 
+        private static readonly ColorInfo MicOffColorInfo = new(Settings.Default.MicOffColor);
+        private static readonly ColorInfo MicOnColorInfo = new(Settings.Default.MicOnColor);
+        private static readonly ColorInfo MicUnknownColorInfo = new(Settings.Default.MicUndefinedColor);
+
         private static SystemStatus.VoiceMeeterStatus voiceMeeterStatus;
         private static SystemStatus.LightStripStatus lightStripStatus = SystemStatus.LightStripStatus.Unknown;
         private static SystemStatus.MicrophoneStatus microphoneStatus = SystemStatus.MicrophoneStatus.Unknown;
@@ -138,19 +142,22 @@ namespace MicAware
 
         private void SetLightSignalMicOff()
         {
-            var res = lightApi.SendLightStatusColor(true, 0, 100, 100);
+            var res = lightApi.SendLightStatusColor(true, MicOffColorInfo.Hue, MicOffColorInfo.Saturation,
+                MicOffColorInfo.Brightness);
             SetLightStripStatus(res);
         }
 
         private void SetLightSignalMicStatusUnknown()
         {
-            var res = lightApi.SendLightStatusColor(true, 240, 100, 100);
+            var res = lightApi.SendLightStatusColor(true, MicUnknownColorInfo.Hue, MicUnknownColorInfo.Saturation,
+                MicUnknownColorInfo.Brightness);
             SetLightStripStatus(res);
         }
 
         private void SetLightSignalMicOn()
         {
-            var res = lightApi.SendLightStatusColor(true, 107, 100, 100);
+            var res = lightApi.SendLightStatusColor(true, MicOnColorInfo.Hue, MicOnColorInfo.Saturation,
+                MicOnColorInfo.Brightness);
             SetLightStripStatus(res);
         }
 
@@ -290,6 +297,5 @@ namespace MicAware
         }
 
         #endregion
-
     }
 }

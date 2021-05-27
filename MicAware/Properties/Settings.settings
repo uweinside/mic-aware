@@ -1,5 +1,5 @@
 ﻿<?xml version='1.0' encoding='utf-8'?>
-<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="MicFlasher.UI.Properties" GeneratedClassName="Settings">
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="MicAware.Properties" GeneratedClassName="Settings">
   <Profiles />
   <Settings>
     <Setting Name="MicOffColor" Type="System.String" Scope="User">
@@ -16,6 +16,9 @@
     </Setting>
     <Setting Name="VoiceMeterParameter" Type="System.String" Scope="User">
       <Value Profile="(Default)">Strip[0].Mute</Value>
+    </Setting>
+    <Setting Name="MicUndefinedColor" Type="System.String" Scope="User">
+      <Value Profile="(Default)">240,100,100</Value>
     </Setting>
   </Settings>
 </SettingsFile>
