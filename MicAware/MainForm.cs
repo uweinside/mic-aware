@@ -4,56 +4,55 @@ using System.Drawing;
 using System.Windows.Forms;
 using Elgato;
 using MicAware.Properties;
+using Voicemeeter;
 using VoiceMeeter;
 
 namespace MicAware
 {
     public partial class MainForm : Form
     {
-        private static bool _pulseOn = true;
-        private static readonly string LightStripUri = Settings.Default.LightStripUri;
-        public static readonly int LightStripPort = Settings.Default.LightStripPort;
-        private static readonly LightApi LightApi = new(LightStripUri, LightStripPort);
-        private static StatusInfo.VoiceMeeterStatus _voiceMeeterStatus;
-        private static StatusInfo.LightStripStatus _lightStripStatus = StatusInfo.LightStripStatus.Unknown;
-        private static StatusInfo.MicrophoneStatus _microphoneStatus = StatusInfo.MicrophoneStatus.Unknown;
+        #region Constructor
 
-        public MainForm(StatusInfo.VoiceMeeterStatus voiceMeeterStatus)
+        public MainForm()
         {
             InitializeComponent();
-            _voiceMeeterStatus = voiceMeeterStatus;
-            DisplayVoiceMeeterStatus();
-            DisplayMicrophoneStatus();
-            if (_voiceMeeterStatus == StatusInfo.VoiceMeeterStatus.LoggedIn) TimerHeartbeat.Enabled = true;
+            voiceMeeterStatus = SystemStatus.VoiceMeeterStatus.Unknown;
         }
 
-        private void timerFlashPulse_Tick(object sender, EventArgs e)
-        {
-            if (_pulseOn)
-                SendLightsRed();
-            else
-                SendLightsOff();
+        #endregion
 
-            _pulseOn = !_pulseOn;
-        }
+        #region Variables
+
+        private static readonly string lightStripUri = Settings.Default.LightStripUri;
+        private static readonly int lightStripPort = Settings.Default.LightStripPort;
+        private static readonly LightApi lightApi = new(lightStripUri, lightStripPort);
+
+        private static SystemStatus.VoiceMeeterStatus voiceMeeterStatus;
+        private static SystemStatus.LightStripStatus lightStripStatus = SystemStatus.LightStripStatus.Unknown;
+        private static SystemStatus.MicrophoneStatus microphoneStatus = SystemStatus.MicrophoneStatus.Unknown;
+        private static bool pulseOn = true;
+
+        #endregion
+
+        #region Status Display
 
         private void DisplayVoiceMeeterStatus()
         {
-            switch (_voiceMeeterStatus)
+            switch (voiceMeeterStatus)
             {
-                case StatusInfo.VoiceMeeterStatus.LoggedIn:
+                case SystemStatus.VoiceMeeterStatus.LoggedIn:
                     VoiceMeeterStatusLabel.Text = "OK";
                     VoiceMeeterStatusLabel.ForeColor = Color.White;
                     VoiceMeeterLabel.ForeColor = Color.White;
                     VoiceMeeterPanel.BackColor = Color.Green;
                     break;
-                case StatusInfo.VoiceMeeterStatus.Error:
+                case SystemStatus.VoiceMeeterStatus.Error:
                     VoiceMeeterStatusLabel.Text = "Error";
                     VoiceMeeterStatusLabel.ForeColor = Color.White;
                     VoiceMeeterLabel.ForeColor = Color.White;
                     VoiceMeeterPanel.BackColor = Color.Red;
                     break;
-                case StatusInfo.VoiceMeeterStatus.Unknown:
+                case SystemStatus.VoiceMeeterStatus.Unknown:
                     VoiceMeeterStatusLabel.Text = string.Empty;
                     VoiceMeeterStatusLabel.ForeColor = Color.White;
                     VoiceMeeterLabel.ForeColor = Color.Black;
@@ -70,61 +69,61 @@ namespace MicAware
 
         private void DisplayMicrophoneStatus()
         {
-            switch (_microphoneStatus)
+            switch (microphoneStatus)
             {
-                case StatusInfo.MicrophoneStatus.On:
+                case SystemStatus.MicrophoneStatus.On:
                     MicrophonePanel.BackColor = Color.Green;
                     MicrophoneLabel.ForeColor = Color.White;
                     MicrophoneStatusLabel.ForeColor = Color.White;
-                    SendLightsGreen();
+                    SetLightSignalMicOn();
                     MicrophoneStatusLabel.Text = "ON";
                     break;
-                case StatusInfo.MicrophoneStatus.Off:
+                case SystemStatus.MicrophoneStatus.Off:
                     MicrophonePanel.BackColor = Color.Green;
                     MicrophoneLabel.ForeColor = Color.White;
                     MicrophoneStatusLabel.ForeColor = Color.White;
                     MicrophoneStatusLabel.Text = "OFF";
                     break;
-                case StatusInfo.MicrophoneStatus.Error:
+                case SystemStatus.MicrophoneStatus.Error:
                     MicrophoneLabel.ForeColor = Color.White;
                     MicrophonePanel.BackColor = Color.Red;
                     MicrophoneStatusLabel.ForeColor = Color.White;
                     MicrophoneStatusLabel.Text = "OFF";
                     break;
-                case StatusInfo.MicrophoneStatus.Unknown:
+                case SystemStatus.MicrophoneStatus.Unknown:
                     MicrophonePanel.BackColor = Color.DodgerBlue;
                     MicrophoneLabel.ForeColor = Color.Black;
                     MicrophoneStatusLabel.ForeColor = Color.Black;
                     MicrophoneStatusLabel.Text = "Wait";
-                    SendLightsBlue();
+                    SetLightSignalMicStatusUnknown();
                     break;
                 default:
                     MicrophonePanel.BackColor = Color.DodgerBlue;
                     MicrophoneLabel.ForeColor = Color.Black;
                     MicrophoneStatusLabel.ForeColor = Color.Black;
                     MicrophoneStatusLabel.Text = "Wait";
-                    SendLightsBlue();
+                    SetLightSignalMicStatusUnknown();
                     break;
             }
         }
 
         private void DisplayLightStripStatus()
         {
-            switch (_lightStripStatus)
+            switch (lightStripStatus)
             {
-                case StatusInfo.LightStripStatus.OK:
+                case SystemStatus.LightStripStatus.OK:
                     LightStripPanel.BackColor = Color.Green;
                     LightStripLabel.ForeColor = Color.White;
                     LightStripStatusLabel.ForeColor = Color.White;
                     LightStripStatusLabel.Text = "OK";
                     break;
-                case StatusInfo.LightStripStatus.Error:
+                case SystemStatus.LightStripStatus.Error:
                     LightStripPanel.BackColor = Color.Red;
                     LightStripLabel.ForeColor = Color.White;
                     LightStripStatusLabel.ForeColor = Color.White;
                     LightStripStatusLabel.Text = "Error";
                     break;
-                case StatusInfo.LightStripStatus.Unknown:
+                case SystemStatus.LightStripStatus.Unknown:
                     LightStripPanel.BackColor = Color.DodgerBlue;
                     LightStripLabel.ForeColor = Color.White;
                     LightStripStatusLabel.ForeColor = Color.White;
@@ -133,44 +132,93 @@ namespace MicAware
             }
         }
 
-        private void SendLightsRed()
+        #endregion
+
+        #region Light Signal Settings
+
+        private void SetLightSignalMicOff()
         {
-            var res = LightApi.SendLightStatusColor(true, 0, 100, 100);
+            var res = lightApi.SendLightStatusColor(true, 0, 100, 100);
             SetLightStripStatus(res);
         }
 
-        private void SendLightsBlue()
+        private void SetLightSignalMicStatusUnknown()
         {
-            var res = LightApi.SendLightStatusColor(true, 240, 100, 100);
+            var res = lightApi.SendLightStatusColor(true, 240, 100, 100);
             SetLightStripStatus(res);
         }
 
-        private void SendLightsGreen()
+        private void SetLightSignalMicOn()
         {
-            var res = LightApi.SendLightStatusColor(true, 107, 100, 100);
+            var res = lightApi.SendLightStatusColor(true, 107, 100, 100);
             SetLightStripStatus(res);
         }
 
-        private void SendLightsOff()
+        private void SetLightSignalOff()
         {
-            var res = LightApi.SendLightStatusOnOff(false);
-            SetLightStripStatus(res);
-        }
-
-        private void SendLightsOn()
-        {
-            var res = LightApi.SendLightStatusOnOff(true);
+            var res = lightApi.SendLightStatusOnOff(false);
             SetLightStripStatus(res);
         }
 
         private void SetLightStripStatus(string statusJson)
         {
             if (statusJson == null)
-                _lightStripStatus = StatusInfo.LightStripStatus.Error;
+                lightStripStatus = SystemStatus.LightStripStatus.Error;
             else
-                _lightStripStatus = StatusInfo.LightStripStatus.OK;
+                lightStripStatus = SystemStatus.LightStripStatus.OK;
             DisplayLightStripStatus();
         }
+
+        #endregion
+
+        #region Control Events
+
+        private void NotifyIconMain_DoubleClick(object sender, EventArgs e)
+        {
+            ShowInTaskbar = true;
+            NotifyIconGreen.Visible = false;
+            WindowState = FormWindowState.Normal;
+        }
+
+        private void MenuItemExit_Click(object sender, EventArgs e)
+        {
+            Close();
+        }
+
+        #endregion
+
+        #region Form Events
+
+        private void MainForm_Load(object sender, EventArgs e)
+        {
+            var resLogin = Remote.Login(RunVoicemeeterParam.VoicemeeterBanana, false);
+            voiceMeeterStatus =
+                resLogin ? SystemStatus.VoiceMeeterStatus.LoggedIn : SystemStatus.VoiceMeeterStatus.Error;
+
+            DisplayVoiceMeeterStatus();
+            DisplayMicrophoneStatus();
+
+            if (voiceMeeterStatus == SystemStatus.VoiceMeeterStatus.LoggedIn) TimerHeartbeat.Enabled = true;
+        }
+
+        private void MainForm_Resize(object sender, EventArgs e)
+        {
+            if (WindowState == FormWindowState.Minimized)
+            {
+                ShowInTaskbar = false;
+                NotifyIconGreen.Visible = true;
+                TimerMinimize.Enabled = false;
+            }
+        }
+
+        private void MainForm_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            SetLightSignalOff();
+        }
+
+        #endregion
+
+        #region Timer
 
         private void TimerHeartbeat_Tick(object sender, EventArgs e)
         {
@@ -180,24 +228,24 @@ namespace MicAware
             // VoiceMeeter is connected
             if (isDirty == 1)
             {
-                _microphoneStatus = StatusInfo.MicrophoneStatus.Unknown;
-                _voiceMeeterStatus = StatusInfo.VoiceMeeterStatus.LoggedIn;
+                microphoneStatus = SystemStatus.MicrophoneStatus.Unknown;
+                voiceMeeterStatus = SystemStatus.VoiceMeeterStatus.LoggedIn;
 
                 var res = Remote.GetParameter("Strip[0].Mute");
                 switch (res)
                 {
                     case 0:
-                        _microphoneStatus = StatusInfo.MicrophoneStatus.On;
+                        microphoneStatus = SystemStatus.MicrophoneStatus.On;
                         TimerBlink.Enabled = false;
                         break;
                     case 1:
-                        _microphoneStatus = StatusInfo.MicrophoneStatus.Off;
-                        _pulseOn = true;
+                        microphoneStatus = SystemStatus.MicrophoneStatus.Off;
+                        pulseOn = true;
                         TimerBlink.Enabled = true;
                         break;
                     default:
                         TimerBlink.Enabled = false;
-                        _microphoneStatus = StatusInfo.MicrophoneStatus.Unknown;
+                        microphoneStatus = SystemStatus.MicrophoneStatus.Unknown;
                         break;
                 }
             }
@@ -205,8 +253,8 @@ namespace MicAware
             // VoiceMeeter is disconnected
             if (isDirty == -2)
             {
-                _microphoneStatus = StatusInfo.MicrophoneStatus.Unknown;
-                _voiceMeeterStatus = StatusInfo.VoiceMeeterStatus.Error;
+                microphoneStatus = SystemStatus.MicrophoneStatus.Unknown;
+                voiceMeeterStatus = SystemStatus.VoiceMeeterStatus.Error;
                 TimerBlink.Enabled = false;
             }
 
@@ -216,43 +264,12 @@ namespace MicAware
 
         private void TimerBlink_Tick(object sender, EventArgs e)
         {
-            if (_pulseOn)
-                SendLightsRed();
+            if (pulseOn)
+                SetLightSignalMicOff();
             else
-                SendLightsOff();
+                SetLightSignalOff();
 
-            _pulseOn = !_pulseOn;
-        }
-
-        private void MainForm_FormClosed(object sender, FormClosedEventArgs e)
-        {
-            SendLightsOff();
-        }
-
-        private void MainForm_Load(object sender, EventArgs e)
-        {
-            NotifyIconMain.BalloonTipText = "Application is still running in the background.";
-            NotifyIconMain.BalloonTipTitle = "MicAware";
-        }
-
-
-        private void MainForm_Resize(object sender, EventArgs e)
-        {
-            if (WindowState == FormWindowState.Minimized)
-            {
-                ShowInTaskbar = false;
-                NotifyIconMain.Visible = true;
-                NotifyIconMain.BalloonTipTitle = "MicAware";
-                NotifyIconMain.BalloonTipText = "MicAware";
-                //NotifyIconMain.ShowBalloonTip(1000);
-            }
-        }
-
-        private void NotifyIconMain_DoubleClick(object sender, EventArgs e)
-        {
-            ShowInTaskbar = true;
-            NotifyIconMain.Visible = false;
-            WindowState = FormWindowState.Normal;
+            pulseOn = !pulseOn;
         }
 
         private void TimerMinimize_Tick(object sender, EventArgs e)
@@ -262,9 +279,6 @@ namespace MicAware
             TimerMinimize.Enabled = false;
         }
 
-        private void MenuItemExit_Click(object sender, EventArgs e)
-        {
-            Close();
-        }
+        #endregion
     }
 }

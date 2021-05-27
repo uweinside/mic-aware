@@ -42,10 +42,11 @@ namespace MicAware
             this.LightStripStatusLabel = new System.Windows.Forms.Label();
             this.TimerHeartbeat = new System.Windows.Forms.Timer(this.components);
             this.TimerBlink = new System.Windows.Forms.Timer(this.components);
-            this.NotifyIconMain = new System.Windows.Forms.NotifyIcon(this.components);
+            this.NotifyIconGreen = new System.Windows.Forms.NotifyIcon(this.components);
             this.MenuStripTrayIcon = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.MenuItemExit = new System.Windows.Forms.ToolStripMenuItem();
             this.TimerMinimize = new System.Windows.Forms.Timer(this.components);
+            this.NotifyIconRed = new System.Windows.Forms.NotifyIcon(this.components);
             this.VoiceMeeterPanel.SuspendLayout();
             this.MicrophonePanel.SuspendLayout();
             this.LightStripPanel.SuspendLayout();
@@ -165,14 +166,14 @@ namespace MicAware
             this.TimerBlink.Interval = 1000;
             this.TimerBlink.Tick += new System.EventHandler(this.TimerBlink_Tick);
             // 
-            // NotifyIconMain
+            // NotifyIconGreen
             // 
-            this.NotifyIconMain.BalloonTipText = "MicAware";
-            this.NotifyIconMain.BalloonTipTitle = "MicAware";
-            this.NotifyIconMain.ContextMenuStrip = this.MenuStripTrayIcon;
-            this.NotifyIconMain.Icon = ((System.Drawing.Icon)(resources.GetObject("NotifyIconMain.Icon")));
-            this.NotifyIconMain.Text = "MicAware";
-            this.NotifyIconMain.DoubleClick += new System.EventHandler(this.NotifyIconMain_DoubleClick);
+            this.NotifyIconGreen.BalloonTipText = "MicAware";
+            this.NotifyIconGreen.BalloonTipTitle = "MicAware";
+            this.NotifyIconGreen.ContextMenuStrip = this.MenuStripTrayIcon;
+            this.NotifyIconGreen.Icon = ((System.Drawing.Icon)(resources.GetObject("NotifyIconGreen.Icon")));
+            this.NotifyIconGreen.Text = "MicAware";
+            this.NotifyIconGreen.DoubleClick += new System.EventHandler(this.NotifyIconMain_DoubleClick);
             // 
             // MenuStripTrayIcon
             // 
@@ -193,6 +194,14 @@ namespace MicAware
             this.TimerMinimize.Enabled = true;
             this.TimerMinimize.Interval = 10000;
             this.TimerMinimize.Tick += new System.EventHandler(this.TimerMinimize_Tick);
+            // 
+            // NotifyIconRed
+            // 
+            this.NotifyIconRed.BalloonTipText = "MicAware";
+            this.NotifyIconRed.BalloonTipTitle = "MicAware";
+            this.NotifyIconRed.ContextMenuStrip = this.MenuStripTrayIcon;
+            this.NotifyIconRed.Icon = ((System.Drawing.Icon)(resources.GetObject("NotifyIconRed.Icon")));
+            this.NotifyIconRed.Text = "MicAware";
             // 
             // MainForm
             // 
@@ -233,9 +242,10 @@ namespace MicAware
         private System.Windows.Forms.Label LightStripStatusLabel;
         private System.Windows.Forms.Timer TimerHeartbeat;
         private System.Windows.Forms.Timer TimerBlink;
-        private System.Windows.Forms.NotifyIcon NotifyIconMain;
+        private System.Windows.Forms.NotifyIcon NotifyIconGreen;
         private System.Windows.Forms.Timer TimerMinimize;
         private System.Windows.Forms.ContextMenuStrip MenuStripTrayIcon;
         private System.Windows.Forms.ToolStripMenuItem MenuItemExit;
+        private System.Windows.Forms.NotifyIcon NotifyIconRed;
     }
 }

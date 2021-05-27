@@ -4,7 +4,7 @@
     <OutputType>WinExe</OutputType>
     <TargetFramework>net5.0-windows</TargetFramework>
     <UseWindowsForms>true</UseWindowsForms>
-    <ApplicationIcon>microphone.ico</ApplicationIcon>
+    <ApplicationIcon>Mic-Green.ico</ApplicationIcon>
   </PropertyGroup>
 
   <ItemGroup>
